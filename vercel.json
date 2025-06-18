@@ -1,0 +1,7 @@
+{
+  "buildCommand": "pip install -r requirements.txt",
+  "outputDirectory": ".",
+  "devCommand": "streamlit run 💡_LIAT_MEUNIQUE_SYSTEM.py",
+  "installCommand": "pip install -r requirements.txt",
+  "framework": null
+} 

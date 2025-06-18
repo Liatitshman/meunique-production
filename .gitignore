@@ -1,0 +1,17 @@
+.env
+*.pyc
+__pycache__/
+.DS_Store
+backups/
+*.log
+.streamlit/secrets.toml
+config/google_service_account.json
+*.zip
+.vscode/
+.idea/
+
+# Ignore files with API keys
+📤_UPLOAD_NOW.md
+🚀_STREAMLIT_CLOUD_DEPLOY.md
+*_SECRETS.md
+*secrets* 
