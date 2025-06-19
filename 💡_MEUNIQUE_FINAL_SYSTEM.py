@@ -25,6 +25,16 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# בדיקה אם מופעל ב-Streamlit Cloud או מקומית
+if "streamlit" in os.environ.get("STREAMLIT_SERVER_ADDRESS", ""):
+    # רץ ב-Streamlit Cloud - השתמש ב-secrets
+    DEFAULT_LANGUAGE = "hebrew"
+    PREFERRED_TONE = "kombina"
+else:
+    # רץ מקומית - הגדרות ברירת מחדל
+    DEFAULT_LANGUAGE = "hebrew"
+    PREFERRED_TONE = "kombina"
+
 # Advanced Bot Classes
 @dataclass
 class ProfileMapperBot:
@@ -357,14 +367,14 @@ creative_filter_bot = CreativeFilterBot()
 # Initialize session state with personalization
 if 'user_preferences' not in st.session_state:
     st.session_state.user_preferences = {
-        'language': 'mixed',  # Changed to mixed for Hebrew/English
+        'language': DEFAULT_LANGUAGE,
         'theme': 'light',
         'tone_preference': ['friendly', 'professional'],
         'industry_focus': 'tech',
         'company_size': 'startup',
         'user_type': 'recruiter',  # recruiter, hiring_manager, founder
         'experience_level': 'intermediate',  # beginner, intermediate, expert
-        'preferred_tone': 'friendly_professional'  # formal, friendly_professional, casual, kombina
+        'preferred_tone': PREFERRED_TONE  # formal, friendly_professional, casual, kombina
     }
     st.session_state.personal_story = {
         'editable': True,
