@@ -25,12 +25,30 @@ docs/                     # כל הקבצים המדריכים האלו
 
 Manage App → Secrets:
 ```
-OPENAI_API_KEY = "sk-…"
-[twilio]
-account_sid="AC…"
-auth_token="…"
-from_whatsapp="whatsapp:+14155238886"
-admin_phone  ="whatsapp:+972…"
+# ---------- חובה ----------
+OPENAI_API_KEY = "sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+TWILIO_ACCOUNT_SID = "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+TWILIO_AUTH_TOKEN  = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+# ---------- Google Sheet ----------
+GSHEET_ID = "1AbCdEfGhIjKlMnOpQrStUvWxYz1234567890"
+
+# JSON של Service-Account (כבלוק אחד!)
+GCP_SERVICE_JSON = """
+{
+  "type": "service_account",
+  "project_id": "meunique-cost",
+  "private_key_id": "................................",
+  "private_key": "-----BEGIN PRIVATE KEY-----\\nMIIE...\\n-----END PRIVATE KEY-----\\n",
+  "client_email": "meunique-cost@meunique-cost.iam.gserviceaccount.com",
+  "client_id": "123456789012345678901",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/.../cert"
+}
+"""
 ```
 
 ## 4. זרימת עבודה קצרה
