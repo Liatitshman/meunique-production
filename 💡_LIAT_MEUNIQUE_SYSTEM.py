@@ -286,136 +286,291 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
 
 # טאב חדש - חנות למגייסות
 with tab1:
-    st.header("🛍️ Recruiter's Store - חנות הכלים שלך")
+    st.header("🛍️ MeUnique Store - Your Recruitment Hub")
     
     # הצעה מיוחדת
     st.markdown("""
     <div class="kombina-alert">
-        🎉 מבצע השבוע: 20% הנחה על חבילת ה-Enterprise! קוד קופון: LIAT2025
+        🎉 Welcome Liat! Choose your agent and start recruiting smarter
     </div>
     """, unsafe_allow_html=True)
     
-    # חבילות
-    st.subheader("📦 בחרי את החבילה המושלמת לך")
+    # בחירת סוכן
+    st.subheader("🤖 Choose Your AI Agent")
     
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
     
     with col1:
         st.markdown("""
-        <div class="israeli-card" style="border-color: #28a745;">
-            <h3 style="color: #28a745;">🌱 Starter Pack</h3>
-            <h2>₪499/חודש</h2>
-            <ul>
-                <li>✅ 50 סריקות חכמות</li>
-                <li>✅ 100 הודעות אוטומטיות</li>
-                <li>✅ דוחות בסיסיים</li>
-                <li>✅ תמיכה בצ'אט</li>
-                <li>❌ AI מתקדם</li>
-                <li>❌ אינטגרציות</li>
-            </ul>
+        <div class="israeli-card" style="text-align: center; cursor: pointer;">
+            <div style="font-size: 60px;">🎯</div>
+            <h3>Smart Hunter</h3>
+            <p>Find perfect candidates with AI</p>
+            <small>• LinkedIn Scanner<br>• Military Networks<br>• Kombina Score</small>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("🛒 התחל עכשיו", key="starter"):
-            st.success("✅ נוספת לחבילת Starter!")
-            st.balloons()
+        if st.button("🚀 Launch Hunter", key="launch_hunter", use_container_width=True):
+            st.session_state.active_agent = "hunter"
+            st.success("✅ Hunter Agent Activated!")
     
     with col2:
         st.markdown("""
-        <div class="israeli-card" style="border-color: #007bff; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
-            <h3 style="color: #007bff;">⭐ Business Pro</h3>
-            <h2>₪1,299/חודש</h2>
-            <p style="color: #ff6b6b;">הכי פופולרי!</p>
-            <ul>
-                <li>✅ 200 סריקות חכמות</li>
-                <li>✅ 500 הודעות אוטומטיות</li>
-                <li>✅ AI לכתיבת הודעות</li>
-                <li>✅ אנליטיקס מתקדם</li>
-                <li>✅ אינטגרציות מלאות</li>
-                <li>✅ תמיכת פרימיום</li>
-            </ul>
+        <div class="israeli-card" style="text-align: center; cursor: pointer;">
+            <div style="font-size: 60px;">💬</div>
+            <h3>Message Wizard</h3>
+            <p>Create perfect outreach messages</p>
+            <small>• 5 Tone Styles<br>• A/B Testing<br>• Auto-personalize</small>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("🚀 שדרג עכשיו", key="business", type="primary"):
-            st.success("✅ ברוכה הבאה ל-Business Pro!")
-            st.balloons()
+        if st.button("✨ Launch Wizard", key="launch_wizard", use_container_width=True):
+            st.session_state.active_agent = "wizard"
+            st.success("✅ Message Wizard Activated!")
     
     with col3:
         st.markdown("""
-        <div class="israeli-card" style="border-color: #ffd700; background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
-            <h3 style="color: #ff6b6b;">👑 Enterprise</h3>
-            <h2>₪2,999/חודש</h2>
-            <p style="color: #28a745;">חיסכון של 20%!</p>
-            <ul>
-                <li>✅ סריקות ללא הגבלה</li>
-                <li>✅ הודעות ללא הגבלה</li>
-                <li>✅ AI מותאם אישית</li>
-                <li>✅ API מלא</li>
-                <li>✅ מנהל הצלחה אישי</li>
-                <li>✅ הדרכה 1-על-1</li>
+        <div class="israeli-card" style="text-align: center; cursor: pointer;">
+            <div style="font-size: 60px;">📊</div>
+            <h3>Analytics Pro</h3>
+            <p>Deep insights & predictions</p>
+            <small>• Market Trends<br>• Success Patterns<br>• ROI Analysis</small>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("📈 Launch Analytics", key="launch_analytics", use_container_width=True):
+            st.session_state.active_agent = "analytics"
+            st.success("✅ Analytics Pro Activated!")
+    
+    with col4:
+        st.markdown("""
+        <div class="israeli-card" style="text-align: center; cursor: pointer;">
+            <div style="font-size: 60px;">🧠</div>
+            <h3>Smart CRM</h3>
+            <p>Manage your talent pool</p>
+            <small>• Auto-update<br>• Smart Tags<br>• Relationship Map</small>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("🗂️ Launch CRM", key="launch_crm", use_container_width=True):
+            st.session_state.active_agent = "crm"
+            st.success("✅ Smart CRM Activated!")
+    
+    # Active Agent Interface
+    if 'active_agent' in st.session_state:
+        st.divider()
+        
+        if st.session_state.active_agent == "hunter":
+            st.subheader("🎯 Smart Hunter Agent - Active")
+            
+            # Agent Controls
+            col_a, col_b = st.columns([3, 1])
+            
+            with col_a:
+                # Search Interface
+                st.markdown("### 🔍 What are you looking for?")
+                
+                search_query = st.text_area(
+                    "Describe your ideal candidate",
+                    placeholder="e.g., Full-stack developer with startup experience, preferably from 8200, knows React and Node.js...",
+                    height=100
+                )
+                
+                # Quick Filters
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    experience_level = st.selectbox("Experience Level", ["All", "Junior (0-3)", "Mid (3-6)", "Senior (6+)", "Expert (10+)"])
+                with col2:
+                    location = st.selectbox("Location", ["All", "Tel Aviv", "Herzliya", "Ramat Gan", "Remote", "Hybrid"])
+                with col3:
+                    salary_range = st.selectbox("Salary Range", ["All", "15-25K", "25-35K", "35-45K", "45K+"])
+                
+                if st.button("🚀 Start Hunting", type="primary", use_container_width=True):
+                    with st.spinner("🔍 Hunting for perfect matches..."):
+                        progress = st.progress(0)
+                        for i in range(100):
+                            progress.progress(i + 1)
+                            time.sleep(0.01)
+                    
+                    st.success("✅ Found 23 amazing candidates!")
+                    
+                    # Results Preview
+                    results_data = {
+                        'Name': ['Daniel Cohen', 'Michal Levi', 'Ron Israeli'],
+                        'Company': ['Wix', 'Monday', 'Startup'],
+                        'Match': ['95%', '92%', '88%'],
+                        'Status': ['🟢 Active', '🟡 Maybe', '🔵 Passive']
+                    }
+                    st.dataframe(pd.DataFrame(results_data), use_container_width=True)
+            
+            with col_b:
+                st.markdown("### ⚙️ Agent Settings")
+                
+                # Agent Configuration
+                include_passive = st.checkbox("Include passive candidates", value=True)
+                use_military_network = st.checkbox("Use military networks", value=True)
+                auto_score = st.checkbox("Auto-calculate Kombina score", value=True)
+                
+                st.divider()
+                
+                # Agent Actions
+                if st.button("💾 Save Search", use_container_width=True):
+                    st.success("Search saved!")
+                if st.button("📤 Export Results", use_container_width=True):
+                    st.success("Exported to CSV!")
+                if st.button("🔄 Refresh Data", use_container_width=True):
+                    st.info("Refreshing...")
+        
+        elif st.session_state.active_agent == "wizard":
+            st.subheader("💬 Message Wizard Agent - Active")
+            
+            col_a, col_b = st.columns([3, 1])
+            
+            with col_a:
+                st.markdown("### ✍️ Create Your Message")
+                
+                # Message Details
+                recipient_name = st.text_input("Recipient Name", "Daniel")
+                recipient_company = st.text_input("Current Company", "Wix")
+                position = st.text_input("Position You're Offering", "Senior Full-Stack Developer")
+                
+                # Tone Selection with Visual Cards
+                st.markdown("### 🎨 Choose Your Tone")
+                tone_cols = st.columns(5)
+                
+                tones = [
+                    {"name": "Formal", "emoji": "👔", "desc": "Professional & respectful"},
+                    {"name": "Friendly", "emoji": "😊", "desc": "Warm & approachable"},
+                    {"name": "Israeli", "emoji": "🇮🇱", "desc": "Direct & authentic"},
+                    {"name": "Kombina", "emoji": "😎", "desc": "Creative & clever"},
+                    {"name": "Tech", "emoji": "💻", "desc": "Technical & precise"}
+                ]
+                
+                selected_tone = None
+                for i, tone in enumerate(tones):
+                    with tone_cols[i]:
+                        if st.button(f"{tone['emoji']}\n{tone['name']}", key=f"tone_{tone['name']}", use_container_width=True):
+                            selected_tone = tone['name']
+                            st.session_state.selected_tone = tone['name']
+                
+                # Context
+                additional_context = st.text_area(
+                    "Additional Context",
+                    placeholder="e.g., Saw your GitHub project, mutual connection with X, company just raised funding..."
+                )
+                
+                if st.button("✨ Generate Message", type="primary", use_container_width=True):
+                    with st.spinner("🤖 Crafting the perfect message..."):
+                        time.sleep(1)
+                    
+                    # Generated Message
+                    if st.session_state.get('selected_tone') == 'Kombina':
+                        message = f"""
+Hey {recipient_name}! 👋
+
+Saw you're crushing it at {recipient_company} - seriously impressive stuff! 🚀
+
+Got something that might interest you... 
+A friend's company (from my unit 😉) is looking for exactly someone with your skills.
+
+{position} role, but way cooler than it sounds.
+
+Coffee at Dizengoff? ☕ My treat!
+
+What say?
+                        """
+                    else:
+                        message = f"""
+Hi {recipient_name},
+
+I came across your profile and was impressed by your experience at {recipient_company}.
+
+I have an exciting opportunity for a {position} role that aligns perfectly with your background.
+
+Would you be open to a brief conversation?
+
+Best regards,
+Liat
+                        """
+                    
+                    st.text_area("Generated Message:", message, height=200)
+                    
+                    # Message Actions
+                    col1, col2, col3 = st.columns(3)
+                    with col1:
+                        if st.button("📤 Send Now"):
+                            st.success("Message sent!")
+                    with col2:
+                        if st.button("💾 Save Template"):
+                            st.success("Template saved!")
+                    with col3:
+                        if st.button("🔄 Regenerate"):
+                            st.info("Generating new version...")
+            
+            with col_b:
+                st.markdown("### 📊 Message Stats")
+                
+                st.metric("Open Rate", "73%", "+5%")
+                st.metric("Reply Rate", "42%", "+8%")
+                st.metric("Positive Responses", "31%", "+3%")
+                
+                st.divider()
+                
+                st.markdown("### 💡 Pro Tips")
+                tips = [
+                    "🕐 Best time: 10-12 AM",
+                    "📱 Keep it under 5 lines",
+                    "😊 One emoji = 25% more opens",
+                    "🎯 Mention specifics = 60% more replies"
+                ]
+                
+                for tip in tips:
+                    st.info(tip)
+    
+    # Subscription Plans (at the bottom)
+    st.divider()
+    st.subheader("📦 Upgrade Your Plan")
+    
+    plan_cols = st.columns(3)
+    
+    with plan_cols[0]:
+        st.markdown("""
+        <div class="israeli-card" style="border-color: #28a745;">
+            <h3 style="color: #28a745;">🌱 Starter</h3>
+            <h2>$99/mo</h2>
+            <ul style="list-style: none; padding: 0;">
+                <li>✅ 2 Active Agents</li>
+                <li>✅ 100 Searches/mo</li>
+                <li>✅ Basic Analytics</li>
+                <li>❌ API Access</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("👑 הצטרף לאליטה", key="enterprise"):
-            st.success("✅ Welcome to Enterprise!")
-            st.balloons()
     
-    # כלים נוספים
-    st.divider()
-    st.subheader("🛠️ כלים נוספים להרחבה")
+    with plan_cols[1]:
+        st.markdown("""
+        <div class="israeli-card" style="border-color: #007bff; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+            <h3 style="color: #007bff;">⭐ Professional</h3>
+            <h2>$299/mo</h2>
+            <p style="color: #ff6b6b;">Most Popular!</p>
+            <ul style="list-style: none; padding: 0;">
+                <li>✅ All 4 Agents</li>
+                <li>✅ Unlimited Searches</li>
+                <li>✅ Advanced Analytics</li>
+                <li>✅ API Access</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
     
-    tools_cols = st.columns(4)
-    
-    additional_tools = [
-        {
-            "name": "🔍 Super Search",
-            "price": "₪199",
-            "desc": "חיפוש בינה מלאכותית מתקדם",
-            "features": ["חיפוש סמנטי", "זיהוי כישורים נסתרים", "ניתוח עומק"]
-        },
-        {
-            "name": "📧 Email Wizard",
-            "price": "₪149",
-            "desc": "מחולל מיילים חכם",
-            "features": ["10 סגנונות", "A/B Testing", "אופטימיזציה"]
-        },
-        {
-            "name": "📊 Analytics Pro",
-            "price": "₪249",
-            "desc": "דוחות מתקדמים",
-            "features": ["BI Dashboard", "תחזיות", "ROI מדויק"]
-        },
-        {
-            "name": "🤝 Network Boost",
-            "price": "₪299",
-            "desc": "הרחבת רשת קשרים",
-            "features": ["מיפוי קשרים", "המלצות חכמות", "Event alerts"]
-        }
-    ]
-    
-    for i, tool in enumerate(additional_tools):
-        with tools_cols[i]:
-            st.markdown(f"""
-            <div class="israeli-card">
-                <h4>{tool['name']}</h4>
-                <h3 style="color: #667eea;">{tool['price']}/חודש</h3>
-                <p>{tool['desc']}</p>
-                <small>{'<br>'.join(f'• {f}' for f in tool['features'])}</small>
-            </div>
-            """, unsafe_allow_html=True)
-            if st.button(f"הוסף לסל", key=f"tool_{i}"):
-                st.success(f"✅ {tool['name']} נוסף!")
-    
-    # השוואת תכניות
-    st.divider()
-    with st.expander("📊 השוואה מפורטת בין החבילות"):
-        comparison_data = {
-            'פיצ\'ר': ['סריקות חודשיות', 'הודעות', 'AI כתיבה', 'אנליטיקס', 'תמיכה', 'API', 'הדרכה'],
-            'Starter': ['50', '100', '❌', 'בסיסי', 'צ\'אט', '❌', '❌'],
-            'Business': ['200', '500', '✅', 'מתקדם', '24/7', 'חלקי', 'וובינרים'],
-            'Enterprise': ['∞', '∞', '✅ מותאם', 'מלא', 'VIP', '✅ מלא', '1-על-1']
-        }
-        df_comparison = pd.DataFrame(comparison_data)
-        st.dataframe(df_comparison, use_container_width=True, hide_index=True)
+    with plan_cols[2]:
+        st.markdown("""
+        <div class="israeli-card" style="border-color: #ffd700;">
+            <h3 style="color: #ff6b6b;">👑 Enterprise</h3>
+            <h2>Custom</h2>
+            <ul style="list-style: none; padding: 0;">
+                <li>✅ Custom Agents</li>
+                <li>✅ White Label</li>
+                <li>✅ Dedicated Support</li>
+                <li>✅ SLA Guarantee</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
 # טאב 2: צייד חכם (הקיים)
 with tab2:
@@ -1030,7 +1185,7 @@ with tab8:
             default=["תגובה חדשה", "מועמד חם", "יעד הושג"]
         )
         
-        if st.button("💾 שמור העדפות", type="primary", use_container_width=True):
+        if st.button("�� שמור העדפות", type="primary", use_container_width=True):
             st.success("✅ ההעדפות נשמרו בהצלחה!")
             st.balloons()
 
