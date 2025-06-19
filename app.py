@@ -553,7 +553,7 @@ P.S. Remember my grandfather's wisdom: "Teach someone to fish vs. giving them a 
     if st.button("📧 Copy Beta Invitation"):
         st.success("✅ Beta invitation copied! Ready to send to potential users.")
 
-# Sidebar
+# Sidebar with Enhanced Chat
 with st.sidebar:
     st.markdown("## 🎯 Quick Actions")
     
@@ -567,6 +567,40 @@ with st.sidebar:
         st.info("📱 WhatsApp: +972545436397\n📧 liat.tishman85@gmail.com")
     
     st.markdown("---")
+    
+    # Enhanced Chat System
+    st.markdown("### 🤖 Smart Assistant")
+    
+    # Initialize chat history
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+    
+    # Chat interface
+    with st.container():
+        # Display chat messages
+        for message in st.session_state.messages[-3:]:  # Show last 3 messages
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+        
+        # Chat input
+        if prompt := st.chat_input("שאל אותי משהו על MeUnique..."):
+            # Add user message
+            st.session_state.messages.append({"role": "user", "content": prompt})
+            
+            # Generate AI response based on current page context
+            current_tab = st.session_state.get('current_tab', 'home')
+            response = generate_contextual_response(prompt, current_tab)
+            
+            # Add assistant response
+            st.session_state.messages.append({"role": "assistant", "content": response})
+            
+            # Display new messages
+            with st.chat_message("user"):
+                st.markdown(prompt)
+            with st.chat_message("assistant"):
+                st.markdown(response)
+    
+    st.markdown("---")
     st.markdown("### 📊 Live Stats")
     st.metric("👥 Beta Users", "47")
     st.metric("🎯 Success Rate", "94%")
@@ -578,6 +612,139 @@ with st.sidebar:
     st.markdown("• ✅ Hebrew language support")
     st.markdown("• ✅ Mobile optimization")
     st.markdown("• 🔄 Enterprise features coming")
+
+def generate_contextual_response(prompt, current_tab):
+    """Generate AI response based on current page context"""
+    
+    # Context-aware responses based on current tab
+    context_responses = {
+        "home": {
+            "keywords": ["מה זה", "איך עובד", "תכונות", "מאפיינים"],
+            "response": """🏠 **אני כאן לעזור לך עם MeUnique!**
+
+MeUnique היא פלטפורמה מהפכנית לגיוס מונעת AI שכוללת:
+
+🤖 **6 סוכני AI מתמחים:**
+• ProfileMapper - ניתוח פרופילי LinkedIn
+• NetworkHunter - חיפוש מועמדים מתקדם  
+• MessageCrafter - הודעות מותאמות אישית
+• CultureMatcher - התאמה תרבותית
+• SkillsAnalyzer - הערכת כישורים
+• CompensationGuru - אופטימיזציה של שכר
+
+💡 **כמו שסבא שלי אמר:** "תן לאדם דג ותזין אותו ליום אחד, למד אותו לדוג ותזין אותו לכל החיים"
+
+יש לך שאלה ספציפית על איך זה עובד?"""
+        },
+        
+        "agents": {
+            "keywords": ["סוכן", "בוט", "AI", "איך", "מה עושה"],
+            "response": """🤖 **הסוכנים החכמים שלנו מוכנים לעבוד בשבילך!**
+
+כל סוכן מתמחה בתחום אחר:
+
+🔍 **ProfileMapper** - מנתח פרופילים בדיוק כירורגי
+🎯 **NetworkHunter** - צייד המועמדים הבלתי נלאה  
+💬 **MessageCrafter** - אמן ההודעות האישיות
+🎭 **CultureMatcher** - המומחה להתאמה תרבותית
+🧠 **SkillsAnalyzer** - הגורו הטכני
+💰 **CompensationGuru** - המשא ומתן ההוגן
+
+איזה סוכן מעניין אותך הכי הרבה?"""
+        },
+        
+        "analytics": {
+            "keywords": ["נתונים", "אנליטיקה", "דוחות", "מטריקות"],
+            "response": """📊 **הדשבורד שלנו נותן לך שקיפות מלאה!**
+
+📈 **מה אתה רואה:**
+• שיעור תגובה בזמן אמת (67%)
+• עלות לכל גיוס ($89)
+• ביצועי הסוכנים
+• תחזיות והמלצות
+
+💡 **התכונות החכמות:**
+• התראות אוטומטיות
+• אופטימיזציה של ROI
+• מעקב עלויות בזמן אמת
+• דוחות מותאמים אישית
+
+רוצה לדעת על מטריקה ספציפית?"""
+        },
+        
+        "business": {
+            "keywords": ["מחיר", "עלות", "תוכנית", "ROI", "כסף"],
+            "response": """💰 **בואי נדבר על המודל העסקי החכם שלנו!**
+
+📋 **תוכניות התמחור:**
+🥉 Starter: $99/חודש - מושלם לפרילנסרים
+🥈 Professional: $299/חודש - לסוכנויות קטנות  
+🥇 Enterprise: $799/חודש - לחברות גדולות
+
+🧮 **מחשבון ROI:**
+• חיסכון ממוצע: $4,200/חודש
+• זמן חסוך: 14 שעות/שבוע
+• שיעור הצלחה: +40%
+
+💡 **עלות למשתמש בטא:** $9.83/חודש
+**נקודת איזון:** 7 משתמשים משלמים
+
+יש לך שאלות על התמחור או ROI?"""
+        },
+        
+        "share": {
+            "keywords": ["שיתוף", "שיווק", "בטא", "הזמנה"],
+            "response": """🔗 **בואי נפיץ את MeUnique ברשתות!**
+
+📱 **תבניות מוכנות:**
+• LinkedIn - פוסט מקצועי
+• Twitter - הודעה קצרה ועוצמתית
+• WhatsApp - הזמנה אישית
+
+🧪 **תוכנית הבטא:**
+• גישה חינמית ל-30 יום
+• תמיכה ישירה איתי
+• השפעה על תכונות עתידיות
+• מחירים מועדפים
+
+📧 **הזמנת בטא מוכנה:**
+נוסח מלא עם כל הפרטים ותמריצים
+
+איך אתה רוצה להתחיל לשתף?"""
+        }
+    }
+    
+    # Default response if no context matches
+    default_response = """🤖 **היי! אני הצ'אט החכם של MeUnique**
+
+אני יכול לעזור לך עם:
+• 🏠 מידע כללי על הפלטפורמה
+• 🤖 הסוכנים החכמים שלנו
+• 📊 אנליטיקה ומטריקות
+• 💰 תמחור ומודל עסקי
+• 🔗 שיתוף ושיווק
+
+על מה תרצה לשמוע יותר?"""
+    
+    # Try to match context
+    if current_tab in context_responses:
+        context = context_responses[current_tab]
+        for keyword in context["keywords"]:
+            if keyword in prompt.lower():
+                return context["response"]
+    
+    # Check for specific keywords across all contexts
+    prompt_lower = prompt.lower()
+    if any(word in prompt_lower for word in ["עלות", "מחיר", "כסף", "תשלום"]):
+        return context_responses["business"]["response"]
+    elif any(word in prompt_lower for word in ["סוכן", "בוט", "AI", "אלגוריתם"]):
+        return context_responses["agents"]["response"]
+    elif any(word in prompt_lower for word in ["נתונים", "דוח", "אנליטיקה"]):
+        return context_responses["analytics"]["response"]
+    elif any(word in prompt_lower for word in ["שיתוף", "שיווק", "בטא"]):
+        return context_responses["share"]["response"]
+    
+    return default_response
 
 if __name__ == "__main__":
     main()
