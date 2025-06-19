@@ -23,7 +23,7 @@ import json
 PROJECT_PATH = Path(__file__).parent
 BACKUP_FOLDER = PROJECT_PATH / "backups"
 SERVICE_ACCOUNT_FILE = PROJECT_PATH / "config" / "google_service_account.json"
-OPENAI_API_KEY = "..."
+OPENAI_API_KEY = "sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 GOOGLE_TRANSLATE_KEY = "..."
 
 # יצירת תיקיית גיבויים אם לא קיימת
@@ -251,3 +251,12 @@ channels = st.multiselect(
     default=["inapp"]
 )
 st.session_state.alert_channels = channels 
+
+[twilio]
+account_sid = "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+auth_token  = "your_twilio_token"
+from_whatsapp = "whatsapp:+14155238886"
+
+[admin]
+password = "SuperSecret123"
+phone_whatsapp = "whatsapp:+9725XXXXXXXX" 
