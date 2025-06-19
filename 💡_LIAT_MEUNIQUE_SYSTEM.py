@@ -1185,7 +1185,7 @@ with tab8:
             default=["תגובה חדשה", "מועמד חם", "יעד הושג"]
         )
         
-        if st.button("�� שמור העדפות", type="primary", use_container_width=True):
+        if st.button("שמור העדפות", type="primary", use_container_width=True):
             st.success("✅ ההעדפות נשמרו בהצלחה!")
             st.balloons()
 

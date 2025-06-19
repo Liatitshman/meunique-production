@@ -1,14 +1,51 @@
-.env
-*.pyc
+# Python
 __pycache__/
-.DS_Store
-backups/
-*.log
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Streamlit
 .streamlit/secrets.toml
-config/google_service_account.json
-*.zip
+
+# IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log
+
+# Database
+*.db
+*.sqlite3
+
+# Temporary files
+*.tmp
+temp/
+tmp/
+
+# Node (for Vercel CLI)
+node_modules/
+package-lock.json
+
+# Vercel
+.vercel/
+
+# Credentials
+credentials.json
+token.json
 
 # Ignore files with API keys
 📤_UPLOAD_NOW.md
