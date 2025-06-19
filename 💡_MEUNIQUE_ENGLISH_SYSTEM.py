@@ -17,6 +17,9 @@ import random
 from dataclasses import dataclass
 from collections import defaultdict
 import asyncio
+from streamlit.components.v1 import iframe
+import gspread
+from google.oauth2.service_account import Credentials
 
 # Page config
 st.set_page_config(
@@ -814,26 +817,17 @@ def render_edit_mode():
 # Chat Integration
 def render_chat_integration():
     """Render the chat integration component"""
-    st.markdown("""
-    <div class="fab" onclick="toggleChat()">💬</div>
-    
-    <script>
-    function toggleChat() {
-        // Toggle chat visibility
-        const chat = document.querySelector('.embedded-chat');
-        if (chat) {
-            chat.style.display = chat.style.display === 'none' ? 'flex' : 'none';
-        }
-    }
-    
-    function closeChat() {
-        const chat = document.querySelector('.embedded-chat');
-        if (chat) {
-            chat.style.display = 'none';
-        }
-    }
-    </script>
-    """, unsafe_allow_html=True)
+    with st.container():
+        css = """
+        <style>
+        .help-fab{position:fixed;bottom:20px;right:20px;width:60px;
+                  height:60px;background:#0066cc;border-radius:50%;
+                  display:flex;align-items:center;justify-content:center;
+                  color:white;font-size:26px;cursor:pointer;z-index:9999;}
+        </style>"""
+        st.markdown(css, unsafe_allow_html=True)
+        st.markdown("<div class='help-fab' onClick='window.location.hash=\"#?help=1\"'>💬</div>",
+                    unsafe_allow_html=True)
 
 # Settings Page
 def render_settings():
@@ -888,6 +882,42 @@ def render_settings():
         st.success("✅ Settings saved successfully!")
         st.rerun()
 
+def handle_help_chat():
+    if st.query_params.get("help") == "1":
+        st.sidebar.title("🆘 Help Bot")
+        option = st.sidebar.selectbox(
+            "Quick actions",
+            ["Ask a question",
+             "Change Color Palette",
+             "Edit Section Text",
+             "Open Admin Panel"]
+        )
+        if option == "Ask a question":
+            user_q = st.sidebar.chat_input("Type your question")
+            if user_q:
+                st.sidebar.write("🤖", "This is where I answer…")
+        elif option == "Change Color Palette":
+            new_primary = st.sidebar.color_picker("Pick primary color", "#0066cc")
+            if st.sidebar.button("Apply"):
+                st.session_state['primary_color'] = new_primary
+                st.experimental_rerun()
+        elif option == "Edit Section Text":
+            section = st.sidebar.selectbox("Section", ["Hero Title", "Hero Body"])
+            new_text = st.sidebar.text_area("New content")
+            if st.sidebar.button("Save"):
+                st.session_state[f'section_{section}'] = new_text
+                st.experimental_rerun()
+        else:  # Open Admin Panel
+            st.session_state.current_page = 'admin'
+            st.experimental_rerun()
+
+@st.cache_resource
+def load_usage():
+    creds = Credentials.from_service_account_file("gcp_service.json",
+            scopes=["https://www.googleapis.com/auth/spreadsheets.readonly"])
+    sheet = gspread.authorize(creds).open("Cost_Usage_Dashboard")
+    return sheet.worksheet("Summary").get_all_records()
+
 # Main App
 def main():
     render_header()
@@ -926,6 +956,32 @@ def main():
             <p>© 2024 MeUnique.io - Revolutionizing Recruitment with Israeli Innovation</p>
         </div>
         """, unsafe_allow_html=True)
+
+    # Sidebar tools
+    tools = ["🏠 Home", "🤖 Chatbot", "🧐 AI Detector", "📄 Resume Parser"]
+    choice = st.sidebar.radio("🛠 Tools", tools)
+
+    if choice == "🤖 Chatbot":
+        iframe("https://chatbot-ui.vercel.app/?model=gpt-4o&theme=pastel", height=600)
+    elif choice == "🧐 AI Detector":
+        iframe("https://aidetector.streamlit.app", height=600, scrolling=True)
+    elif choice == "📄 Resume Parser":
+        uploaded = st.file_uploader("Upload CV (PDF)", type="pdf")
+        if uploaded:
+            import pyresparser, tempfile, json
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+                tmp.write(uploaded.read())
+                data = pyresparser.ResumeParser(tmp.name).get_extracted_data()
+            st.json(data)
+
+    st.sidebar.subheader("💸 Usage & Cost")
+    st.sidebar.table(load_usage())
+
+    if "AUTH" not in st.session_state:
+        pwd = st.text_input("Password", type="password")
+        if st.button("Enter") and pwd == ADMIN_PWD:
+            st.session_state.AUTH = True
+        st.stop()
 
 if __name__ == "__main__":
     main() 

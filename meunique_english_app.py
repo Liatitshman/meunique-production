@@ -17,6 +17,7 @@ import random
 from dataclasses import dataclass
 from collections import defaultdict
 import asyncio
+from streamlit.components.v1 import iframe  # NEW IMPORT
 
 # Page config
 st.set_page_config(
@@ -888,6 +889,28 @@ def render_settings():
         st.success("✅ Settings saved successfully!")
         st.rerun()
 
+# Smart Tools
+def render_smart_tools():
+    """Render sidebar tools and their content"""
+    tools = ["🏠 None", "🤖 Chatbot", "🧐 AI Detector", "📄 Resume Parser"]
+    choice = st.sidebar.radio("🛠 Smart Tools", tools, index=0)
+    if choice == "🤖 Chatbot":
+        iframe("https://chatbot-ui.vercel.app/?model=gpt-4o&theme=pastel", height=600)
+    elif choice == "🧐 AI Detector":
+        iframe("https://aidetector.streamlit.app", height=600, scrolling=True)
+    elif choice == "📄 Resume Parser":
+        uploaded = st.file_uploader("Upload a CV (PDF)", type=["pdf"])
+        if uploaded:
+            try:
+                import tempfile, json
+                from pyresparser import ResumeParser
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+                    tmp.write(uploaded.read())
+                    data = ResumeParser(tmp.name).get_extracted_data()
+                st.json(data)
+            except Exception as e:
+                st.error(f"Error parsing resume: {e}")
+
 # Main App
 def main():
     render_header()
@@ -917,6 +940,9 @@ def main():
         # Chat integration
         render_embedded_chat()
         render_chat_integration()
+        
+        # Smart tools
+        render_smart_tools()
         
         # Footer
         st.markdown("---")

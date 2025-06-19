@@ -15,11 +15,16 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
+import streamlit as st
+from twilio.rest import Client
+import json
 
 # הגדרות
 PROJECT_PATH = Path(__file__).parent
 BACKUP_FOLDER = PROJECT_PATH / "backups"
 SERVICE_ACCOUNT_FILE = PROJECT_PATH / "config" / "google_service_account.json"
+OPENAI_API_KEY = "..."
+GOOGLE_TRANSLATE_KEY = "..."
 
 # יצירת תיקיית גיבויים אם לא קיימת
 BACKUP_FOLDER.mkdir(exist_ok=True)
@@ -174,6 +179,27 @@ def watch_for_changes():
     # ולהפעיל סנכרון אוטומטי
     pass
 
+def send_whatsapp(body, to=None):
+    cfg = st.secrets["twilio"]
+    to = to or st.secrets["admin"]["phone_whatsapp"]
+    client = Client(cfg["account_sid"], cfg["auth_token"])
+    client.messages.create(
+        body=body,
+        from_=cfg["from_whatsapp"],
+        to=to
+    )
+
+def alert_router(event):
+    channels = st.session_state.get("alert_channels",
+                    st.secrets["alerts"]["default_channels"])
+    text = f"⚠️ {event['type']} – {json.dumps(event['data'])}"
+    if "inapp" in channels:
+        st.session_state.alert_stack.append(text)
+    if "slack" in channels:
+        send_slack(text)              # כבר קיים
+    if "whatsapp" in channels:
+        send_whatsapp(text)
+
 if __name__ == "__main__":
     print("""
     💡 LIAT Auto Sync System
@@ -207,4 +233,21 @@ if __name__ == "__main__":
             time.sleep(60)  # בדיקה כל דקה
             
     else:
-        print("👋 להתראות!") 
+        print("👋 להתראות!")
+
+if daily_cost > alert_limit:
+    st.sidebar.error("⚠️ Usage exceeds limit – $%.2f" % daily_cost)
+    send_slack_alert(daily_cost)
+
+[admin]
+password = "SuperSecret123"
+slack_webhook = "https://hooks.slack.com/..."
+[feature_flags]
+enable_ai_detector = true
+
+channels = st.multiselect(
+    "🔔 Where do you want notifications?",
+    ["inapp", "whatsapp", "slack"],
+    default=["inapp"]
+)
+st.session_state.alert_channels = channels 
