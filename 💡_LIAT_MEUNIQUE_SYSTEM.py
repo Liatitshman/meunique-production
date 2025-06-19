@@ -188,52 +188,237 @@ with col3:
     monthly_placements = 8
     st.metric("🎯 השמות החודש", monthly_placements, "+2")
 
-# סרגל צד חכם
+# סרגל צד חכם - הבוט החכם מיקי!
 with st.sidebar:
-    st.header("🧠 מרכז החלטות חכם")
+    st.header("🤖 מיקי - העוזר החכם שלך")
     
-    # תובנות מהרשת
-    st.subheader("🌐 תובנות חמות מהרשת")
+    # אווטאר של הבוט
+    st.markdown("""
+    <div style="text-align: center; padding: 20px;">
+        <div style="font-size: 80px;">🤖</div>
+        <h3 style="color: #667eea;">היי ליאת! 👋</h3>
+        <p>אני מיקי, העוזר החכם שלך</p>
+    </div>
+    """, unsafe_allow_html=True)
     
-    hot_insights = [
-        {"icon": "🔥", "text": "Wiz מגייסת 50 מפתחים - שכר 40K+", "action": "סרוק מועמדים"},
-        {"icon": "💰", "text": "אקזיט צפוי ב-Armis - עובדים מחפשים", "action": "הכן רשימה"},
-        {"icon": "🚀", "text": "סטארטאפ חדש של יוצאי Fiverr", "action": "צור קשר"},
-        {"icon": "🎯", "text": "מחסור במפתחי Rust - הזדמנות!", "action": "מצא מומחים"}
-    ]
+    # צ'אט עם הבוט
+    st.subheader("💬 בואי נדבר")
     
-    for insight in hot_insights:
-        with st.expander(f"{insight['icon']} {insight['text']}"):
-            if st.button(insight['action'], key=insight['text']):
-                st.success("✅ בפעולה!")
+    user_message = st.text_input("מה תרצי לעשות היום?", placeholder="לדוגמה: מצא לי מפתחי Python...")
+    
+    if user_message:
+        with st.spinner("🤔 חושב..."):
+            time.sleep(1)
+        
+        # תגובות חכמות של הבוט
+        bot_responses = {
+            "python": "🐍 מצאתי 23 מפתחי Python מעולים! רוצה שאסנן לפי ניסיון?",
+            "עזרה": "👋 אני יכול לעזור לך למצוא מועמדים, לכתוב הודעות, לנתח נתונים ועוד!",
+            "בוקר": "☀️ בוקר טוב! יש לך 5 תגובות חדשות ו-3 מועמדים חמים!",
+            "default": "💡 רעיון מעולה! בואי נתחיל. איזה תפקיד מחפשים?"
+        }
+        
+        response = bot_responses.get(
+            next((k for k in bot_responses if k in user_message.lower()), 'default')
+        )
+        
+        st.success(response)
+        
+        # פעולות מהירות
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("כן, בואי!", key="bot_yes"):
+                st.info("🚀 מתחיל לחפש...")
+        with col2:
+            if st.button("אולי אחר כך", key="bot_no"):
+                st.info("👍 אני פה כשתצטרכי!")
     
     st.divider()
     
-    # קומבינות חכמות
-    st.subheader("💡 קומבינות מומלצות")
+    # תובנות חמות מהבוט
+    st.subheader("🔥 תובנות חמות")
     
-    kombina_suggestions = [
-        "🎪 פנייה דרך חבר משותף מהצבא - 85% הצלחה",
-        "🎯 הודעה בשעה 11:00 ביום שני - שיא תגובות",
-        "🔄 אזכור אקזיט של החברה הקודמת - מעלה עניין",
-        "☕ הצעת קפה במקום ראיון - 60% יותר נינוח"
+    hot_insights = [
+        {"icon": "🎯", "text": "3 מועמדים ענו בשעה האחרונה!"},
+        {"icon": "💡", "text": "הודעות עם אמוג'י מקבלות 40% יותר תגובות"},
+        {"icon": "📈", "text": "השבוע השגת 85% יעד ההשמות!"},
+        {"icon": "🏆", "text": "את בטופ 5% של המגייסות החודש!"}
     ]
     
-    for suggestion in kombina_suggestions:
-        st.info(suggestion)
+    for insight in hot_insights:
+        st.info(f"{insight['icon']} {insight['text']}")
+    
+    st.divider()
+    
+    # פעולות מומלצות
+    st.subheader("💫 מה כדאי לעשות עכשיו?")
+    
+    actions = [
+        {"text": "📧 לענות ל-3 מועמדים חמים", "urgent": True},
+        {"text": "🔍 לסרוק עוד 10 פרופילים", "urgent": False},
+        {"text": "📊 לבדוק את הדוח השבועי", "urgent": False},
+        {"text": "☕ לקחת הפסקת קפה", "urgent": False}
+    ]
+    
+    for action in actions:
+        if action["urgent"]:
+            if st.button(f"🔴 {action['text']}", key=action['text']):
+                st.success("✅ בוצע!")
+        else:
+            if st.button(action['text'], key=action['text']):
+                st.success("✅ נרשם!")
+    
+    # סטטוס מערכת
+    st.divider()
+    st.caption("🟢 כל המערכות פעילות | 🔄 עדכון אחרון: לפני 2 דקות")
 
 # טאבים ראשיים
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
+    "🛍️ חנות למגייסות",
     "🎯 צייד חכם",
     "🧠 מאגר דינמי",
     "💬 תקשורת חכמה",
     "📊 אנליטיקס ישראלי",
     "🔄 למידה מתמדת",
+    "🤖 בוט חכם",
     "⚙️ העדפות אישיות"
 ])
 
-# טאב 1: צייד חכם
+# טאב חדש - חנות למגייסות
 with tab1:
+    st.header("🛍️ Recruiter's Store - חנות הכלים שלך")
+    
+    # הצעה מיוחדת
+    st.markdown("""
+    <div class="kombina-alert">
+        🎉 מבצע השבוע: 20% הנחה על חבילת ה-Enterprise! קוד קופון: LIAT2025
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # חבילות
+    st.subheader("📦 בחרי את החבילה המושלמת לך")
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("""
+        <div class="israeli-card" style="border-color: #28a745;">
+            <h3 style="color: #28a745;">🌱 Starter Pack</h3>
+            <h2>₪499/חודש</h2>
+            <ul>
+                <li>✅ 50 סריקות חכמות</li>
+                <li>✅ 100 הודעות אוטומטיות</li>
+                <li>✅ דוחות בסיסיים</li>
+                <li>✅ תמיכה בצ'אט</li>
+                <li>❌ AI מתקדם</li>
+                <li>❌ אינטגרציות</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("🛒 התחל עכשיו", key="starter"):
+            st.success("✅ נוספת לחבילת Starter!")
+            st.balloons()
+    
+    with col2:
+        st.markdown("""
+        <div class="israeli-card" style="border-color: #007bff; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+            <h3 style="color: #007bff;">⭐ Business Pro</h3>
+            <h2>₪1,299/חודש</h2>
+            <p style="color: #ff6b6b;">הכי פופולרי!</p>
+            <ul>
+                <li>✅ 200 סריקות חכמות</li>
+                <li>✅ 500 הודעות אוטומטיות</li>
+                <li>✅ AI לכתיבת הודעות</li>
+                <li>✅ אנליטיקס מתקדם</li>
+                <li>✅ אינטגרציות מלאות</li>
+                <li>✅ תמיכת פרימיום</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("🚀 שדרג עכשיו", key="business", type="primary"):
+            st.success("✅ ברוכה הבאה ל-Business Pro!")
+            st.balloons()
+    
+    with col3:
+        st.markdown("""
+        <div class="israeli-card" style="border-color: #ffd700; background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+            <h3 style="color: #ff6b6b;">👑 Enterprise</h3>
+            <h2>₪2,999/חודש</h2>
+            <p style="color: #28a745;">חיסכון של 20%!</p>
+            <ul>
+                <li>✅ סריקות ללא הגבלה</li>
+                <li>✅ הודעות ללא הגבלה</li>
+                <li>✅ AI מותאם אישית</li>
+                <li>✅ API מלא</li>
+                <li>✅ מנהל הצלחה אישי</li>
+                <li>✅ הדרכה 1-על-1</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("👑 הצטרף לאליטה", key="enterprise"):
+            st.success("✅ Welcome to Enterprise!")
+            st.balloons()
+    
+    # כלים נוספים
+    st.divider()
+    st.subheader("🛠️ כלים נוספים להרחבה")
+    
+    tools_cols = st.columns(4)
+    
+    additional_tools = [
+        {
+            "name": "🔍 Super Search",
+            "price": "₪199",
+            "desc": "חיפוש בינה מלאכותית מתקדם",
+            "features": ["חיפוש סמנטי", "זיהוי כישורים נסתרים", "ניתוח עומק"]
+        },
+        {
+            "name": "📧 Email Wizard",
+            "price": "₪149",
+            "desc": "מחולל מיילים חכם",
+            "features": ["10 סגנונות", "A/B Testing", "אופטימיזציה"]
+        },
+        {
+            "name": "📊 Analytics Pro",
+            "price": "₪249",
+            "desc": "דוחות מתקדמים",
+            "features": ["BI Dashboard", "תחזיות", "ROI מדויק"]
+        },
+        {
+            "name": "🤝 Network Boost",
+            "price": "₪299",
+            "desc": "הרחבת רשת קשרים",
+            "features": ["מיפוי קשרים", "המלצות חכמות", "Event alerts"]
+        }
+    ]
+    
+    for i, tool in enumerate(additional_tools):
+        with tools_cols[i]:
+            st.markdown(f"""
+            <div class="israeli-card">
+                <h4>{tool['name']}</h4>
+                <h3 style="color: #667eea;">{tool['price']}/חודש</h3>
+                <p>{tool['desc']}</p>
+                <small>{'<br>'.join(f'• {f}' for f in tool['features'])}</small>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button(f"הוסף לסל", key=f"tool_{i}"):
+                st.success(f"✅ {tool['name']} נוסף!")
+    
+    # השוואת תכניות
+    st.divider()
+    with st.expander("📊 השוואה מפורטת בין החבילות"):
+        comparison_data = {
+            'פיצ\'ר': ['סריקות חודשיות', 'הודעות', 'AI כתיבה', 'אנליטיקס', 'תמיכה', 'API', 'הדרכה'],
+            'Starter': ['50', '100', '❌', 'בסיסי', 'צ\'אט', '❌', '❌'],
+            'Business': ['200', '500', '✅', 'מתקדם', '24/7', 'חלקי', 'וובינרים'],
+            'Enterprise': ['∞', '∞', '✅ מותאם', 'מלא', 'VIP', '✅ מלא', '1-על-1']
+        }
+        df_comparison = pd.DataFrame(comparison_data)
+        st.dataframe(df_comparison, use_container_width=True, hide_index=True)
+
+# טאב 2: צייד חכם (הקיים)
+with tab2:
     st.header("🎯 צייד המועמדים החכם")
     
     col1, col2 = st.columns([2, 1])
@@ -385,8 +570,8 @@ with tab1:
                     st.success("✅ בביצוע!")
                 st.divider()
 
-# טאב 2: מאגר דינמי
-with tab2:
+# טאב 3: מאגר דינמי
+with tab3:
     st.header("🧠 ניהול מאגר דינמי וחכם")
     
     # סיווג חכם
@@ -454,8 +639,8 @@ with tab2:
                 time.sleep(1)
                 st.success("✅ הושלם!")
 
-# טאב 3: תקשורת חכמה
-with tab3:
+# טאב 4: תקשורת חכמה
+with tab4:
     st.header("💬 מערכת תקשורת חכמה")
     
     # בחירת סגנון
@@ -557,8 +742,8 @@ with tab3:
         for tip in tips:
             st.info(tip)
 
-# טאב 4: אנליטיקס ישראלי
-with tab4:
+# טאב 5: אנליטיקס ישראלי
+with tab5:
     st.header("📊 אנליטיקס ותובנות ישראליות")
     
     # מדדי ביצוע
@@ -645,8 +830,8 @@ with tab4:
             if st.button("יישם המלצה", key=insight_data['insight']):
                 st.success("✅ ההמלצה יושמה במערכת!")
 
-# טאב 5: למידה מתמדת
-with tab5:
+# טאב 6: למידה מתמדת
+with tab6:
     st.header("🔄 מערכת למידה והתפתחות")
     
     # למידה מהצלחות
@@ -714,8 +899,81 @@ with tab5:
             st.caption(f"{goal['progress']}% הושלם")
             st.divider()
 
-# טאב 6: העדפות אישיות
-with tab6:
+# טאב 7: בוט חכם
+with tab7:
+    st.header("🤖 מיקי - הבוט החכם")
+    
+    # צ'אט עם הבוט
+    col1, col2 = st.columns([3, 1])
+    
+    with col1:
+        st.subheader("💬 דברי איתי בחופשיות")
+        
+        # היסטוריית צ'אט
+        if 'chat_history' not in st.session_state:
+            st.session_state.chat_history = []
+        
+        # הצגת היסטוריה
+        chat_container = st.container()
+        with chat_container:
+            for msg in st.session_state.chat_history[-5:]:  # הצג 5 הודעות אחרונות
+                if msg['role'] == 'user':
+                    st.markdown(f"**🙋‍♀️ את:** {msg['content']}")
+                else:
+                    st.markdown(f"**🤖 מיקי:** {msg['content']}")
+        
+        # קלט משתמש
+        user_input = st.text_input("הקלידי הודעה...", key="chat_input")
+        
+        if user_input:
+            # הוסף להיסטוריה
+            st.session_state.chat_history.append({"role": "user", "content": user_input})
+            
+            # תגובות חכמות
+            if "מועמד" in user_input:
+                response = "🎯 מצאתי 15 מועמדים שמתאימים! רוצה שאציג אותם לפי התאמה?"
+            elif "הודעה" in user_input:
+                response = "✍️ אני יכול לכתוב הודעה בסגנון ישראלי, קומבינה או רשמי. מה מעדיפה?"
+            elif "עזרה" in user_input:
+                response = "💡 אני יכול: לחפש מועמדים, לכתוב הודעות, לנתח נתונים, להזכיר משימות ועוד!"
+            else:
+                response = "👍 מבינה! בואי נעשה את זה ביחד. איך להתחיל?"
+            
+            st.session_state.chat_history.append({"role": "bot", "content": response})
+            st.experimental_rerun()
+    
+    with col2:
+        st.subheader("⚡ פעולות מהירות")
+        
+        quick_actions = [
+            {"icon": "🔍", "text": "חיפוש מהיר", "desc": "סרוק 50 פרופילים"},
+            {"icon": "✉️", "text": "הודעות", "desc": "שלח 10 הודעות"},
+            {"icon": "📊", "text": "דוח יומי", "desc": "צפה בביצועים"},
+            {"icon": "🎯", "text": "מטרות", "desc": "עדכן יעדים"},
+            {"icon": "💡", "text": "טיפים", "desc": "קבל עצות"}
+        ]
+        
+        for action in quick_actions:
+            if st.button(f"{action['icon']} {action['text']}", key=f"quick_{action['text']}", use_container_width=True):
+                st.info(f"🚀 מבצע: {action['desc']}")
+    
+    # למידת העדפות
+    st.divider()
+    st.subheader("🧠 מה למדתי עליך")
+    
+    learned_preferences = {
+        "שעות פעילות": "09:00-18:00",
+        "סגנון מועדף": "ישראלי עם טאץ' של קומבינה",
+        "תגובה ממוצעת": "73% מהמועמדים",
+        "חברות מועדפות": "סטארטאפים בצמיחה",
+        "נושאים חמים": "AI/ML, Cyber, FinTech"
+    }
+    
+    for pref, value in learned_preferences.items():
+        st.metric(pref, value)
+
+# טאב 8: העדפות אישיות
+with tab8:
     st.header("⚙️ העדפות אישיות - ליאת")
     
     col1, col2 = st.columns(2)
