@@ -62,3 +62,36 @@ https://github.com/Liatitshman/MeUnique-AI-Private/security/secret-scanning/unbl
 
 # אחרי שיצרת את הRepository
 git push -u origin main --force && open https://streamlit.io/cloud
+
+## 🎯 הכתובת הסופית שלך:
+```
+meunique.io
+```
+
+## 📝 השלבים:
+
+### 1️⃣ **העלי ל-Streamlit Cloud קודם:**
+- Repository: `Liatitshman/meunique-production`
+- Branch: `main`
+- Main file: `💡_LIAT_MEUNIQUE_SYSTEM.py`
+- App URL: `meunique`
+
+### 2️⃣ **אחרי שהאפליקציה עולה:**
+1. לכי להגדרות האפליקציה
+2. Settings → General → Custom domain
+3. הוסיפי: `meunique.io`
+
+### 3️⃣ **בחברת הדומיין שלך:**
+תצטרכי להוסיף CNAME record:
+- Name: `@` (או ריק)
+- Points to: `meunique.streamlit.app`
+
+### 4️⃣ **התוצאה:**
+אנשים יכנסו ישירות ל:
+```
+https://meunique.io
+```
+
+וזהו! בלי שום תוספות או כתובות נוספות! 🚀
+
+רוצה שאפתח לך את עמוד ההעלאה?

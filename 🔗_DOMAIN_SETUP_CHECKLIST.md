@@ -166,4 +166,127 @@ python3 -m streamlit run 💡_LIAT_SMART_CHAT_GUIDE.py --server.port 8502
 2. **העלה את הקוד** (10 דקות)
 3. **חבר את הדומיין** (5 דקות)
 
-**תוך 30 דקות את Live! 🚀** 
+**תוך 30 דקות את Live! 🚀**
+
+# 🔗 בקשת עדכון דומיין - MeUnique.io
+
+## 🔍 איך למצוא את חברת הדומיין שלך:
+
+### בדקי באימייל:
+חפשי אחד מהאימיילים האלה:
+- support@namecheap.com
+- support@godaddy.com
+- support@name.com
+- support@hover.com
+- support@bluehost.com
+
+## 📋 הוראות מדויקות לכל חברה:
+
+### 🟠 Namecheap:
+1. היכנסי ל: https://www.namecheap.com
+2. לחצי על "Sign In" (למעלה מימין)
+3. לאחר כניסה, לחצי על "Domain List"
+4. מצאי את meunique.io ולחצי על "MANAGE"
+5. לחצי על "Advanced DNS"
+6. לחצי על "ADD NEW RECORD"
+7. הוסיפי:
+   - Type: `A Record`
+   - Host: `@`
+   - Value: `151.101.1.195`
+   - TTL: `Automatic`
+8. הוסיפי עוד רשומה:
+   - Type: `CNAME Record`
+   - Host: `www`
+   - Value: `meunique.streamlit.app`
+   - TTL: `Automatic`
+9. לחצי על ✓ (Save)
+
+### 🟣 GoDaddy:
+1. היכנסי ל: https://www.godaddy.com
+2. לחצי על "Sign In"
+3. לחצי על "My Products"
+4. מצאי את meunique.io ולחצי על "DNS"
+5. לחצי על "ADD"
+6. הוסיפי:
+   - Type: `A`
+   - Name: `@`
+   - Value: `151.101.1.195`
+   - TTL: `600`
+7. לחצי על "ADD" שוב:
+   - Type: `CNAME`
+   - Name: `www`
+   - Value: `meunique.streamlit.app`
+   - TTL: `600`
+8. לחצי על "SAVE"
+
+### 🔵 Name.com:
+1. היכנסי ל: https://www.name.com
+2. לחצי על "Sign In"
+3. לחצי על "My Domains"
+4. לחצי על meunique.io
+5. לחצי על "DNS Records"
+6. לחצי על "Add Record"
+7. הוסיפי את אותן רשומות כמו למעלה
+
+### 🟢 Hover:
+1. היכנסי ל: https://www.hover.com
+2. Sign In
+3. לחצי על meunique.io
+4. לחצי על "DNS" tab
+5. "Add a Record"
+6. הוסיפי את הרשומות
+
+## ⚡ חשוב מאוד:
+
+### אם יש כבר רשומות DNS:
+1. **אל תמחקי** רשומות MX (למייל)
+2. **אל תמחקי** רשומות TXT (לאימות)
+3. **רק תוסיפי** את הרשומות החדשות
+
+### הרשומות שצריך להוסיף:
+```
+Type: A
+Name: @
+Value: 151.101.1.195
+TTL: 600 (או Automatic)
+
+Type: CNAME
+Name: www
+Value: meunique.streamlit.app
+TTL: 600 (או Automatic)
+```
+
+## ✅ איך לבדוק שזה עובד:
+
+### מיד אחרי העדכון:
+1. פתחי חלון גלישה בסתר (Incognito)
+2. נסי: https://meunique.io
+3. אם לא עובד מיד - זה נורמלי! DNS לוקח זמן
+
+### זמני המתנה:
+- 5-10 דקות: לפעמים עובד כבר
+- 1-2 שעות: בדרך כלל עובד
+- עד 48 שעות: במקרה הגרוע
+
+### בדיקה מתקדמת:
+בטרמינל הריצי:
+```bash
+nslookup meunique.io
+```
+אם רואה את 151.101.1.195 - מעולה!
+
+## 🆘 אם צריך עזרה:
+
+שלחי לחברת הדומיין:
+```
+Hello, I need help updating my DNS records for meunique.io
+I want to point it to my Streamlit app.
+Can you please add:
+- A record: @ -> 151.101.1.195
+- CNAME: www -> meunique.streamlit.app
+Thank you!
+```
+
+---
+
+**💡 טיפ:** רוב החברות מאפשרות צ'אט חי - זו הדרך המהירה ביותר לקבל עזרה! 
