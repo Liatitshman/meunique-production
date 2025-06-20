@@ -22,7 +22,7 @@ if __name__ == "__main__":
     }
     
     bootstrap.run(
-        "💡_MEUNIQUE_ENGLISH_SYSTEM.py",
+        "💡_MEUNIQUE_FINAL_SYSTEM.py",
         "streamlit run",
         flag_options,
         []

@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "💡_MEUNIQUE_ENGLISH_SYSTEM.py",
+      "src": "💡_MEUNIQUE_FINAL_SYSTEM.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb",
@@ -13,11 +13,11 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "💡_MEUNIQUE_ENGLISH_SYSTEM.py"
+      "dest": "💡_MEUNIQUE_FINAL_SYSTEM.py"
     }
   ],
   "functions": {
-    "💡_MEUNIQUE_ENGLISH_SYSTEM.py": {
+    "💡_MEUNIQUE_FINAL_SYSTEM.py": {
       "includeFiles": "**"
     }
   },
