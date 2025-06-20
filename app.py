@@ -20,6 +20,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from typing import Dict, List, Any
 import time
+import openai
 
 # Configuration
 st.set_page_config(
@@ -45,6 +46,102 @@ MONTHLY_COSTS = {
     "Google Drive": 6,
     "Streamlit Cloud": 0,
     "Total": 324
+}
+
+# Initialize session state
+if 'conversation_history' not in st.session_state:
+    st.session_state.conversation_history = []
+if 'selected_agent' not in st.session_state:
+    st.session_state.selected_agent = "Maya Research Pro"
+if 'personality_mode' not in st.session_state:
+    st.session_state.personality_mode = "Friendly"
+if 'chat_category' not in st.session_state:
+    st.session_state.chat_category = "General Consultation"
+
+# Smart Agents Configuration
+AGENTS = {
+    "Maya Research Pro 🔍": {
+        "description": "LinkedIn intelligence & candidate research specialist",
+        "expertise": "Market research, candidate profiling, competitive analysis",
+        "response_rate": "78%",
+        "speciality": "LinkedIn Sales Navigator integration",
+        "color": "#4CAF50"
+    },
+    "Daniel Message Writer Pro ✍️": {
+        "description": "Personalized messaging & outreach expert",
+        "expertise": "Message crafting, response optimization, A/B testing",
+        "response_rate": "82%",
+        "speciality": "78% better response rates proven",
+        "color": "#2196F3"
+    },
+    "Tamar Data Mapper Pro 📊": {
+        "description": "Skills analysis & cost optimization specialist",
+        "expertise": "Data mapping, skills assessment, ROI analysis",
+        "response_rate": "85%",
+        "speciality": "Cost optimization - $1,100/month savings",
+        "color": "#FF9800"
+    },
+    "ROI Growth Analyst Pro 📈": {
+        "description": "Career trajectory prediction & growth analysis",
+        "expertise": "Career mapping, growth prediction, market trends",
+        "response_rate": "79%",
+        "speciality": "Predictive career analytics",
+        "color": "#9C27B0"
+    },
+    "Strategic Hiring Advisor 🎯": {
+        "description": "Team building & scaling strategy expert",
+        "expertise": "Team composition, hiring strategy, scaling plans",
+        "response_rate": "83%",
+        "speciality": "Strategic team building",
+        "color": "#F44336"
+    },
+    "Network Intelligence Pro 🌐": {
+        "description": "Relationship mapping & network analysis",
+        "expertise": "Network analysis, relationship mapping, referral optimization",
+        "response_rate": "77%",
+        "speciality": "Professional network intelligence",
+        "color": "#607D8B"
+    }
+}
+
+# Personality Modes
+PERSONALITY_MODES = {
+    "Formal": {
+        "tone": "Professional, data-focused, precise",
+        "style": "Executive level communication with detailed analysis",
+        "emoji_usage": "Minimal, professional icons only",
+        "greeting": "Good day. I'm here to provide professional consultation."
+    },
+    "Friendly": {
+        "tone": "Accessible, supportive, encouraging",
+        "style": "Warm and approachable with helpful guidance",
+        "emoji_usage": "Moderate use of friendly emojis 😊",
+        "greeting": "Hi there! 😊 I'm happy to help you today!"
+    },
+    "Casual": {
+        "tone": "Relaxed, cool, balanced professionalism",
+        "style": "Easy-going but competent communication",
+        "emoji_usage": "Natural emoji usage 👍",
+        "greeting": "Hey! 👋 What can I help you with?"
+    },
+    "Kombina": {
+        "tone": "Israeli style - direct, confident, results-oriented",
+        "style": "Straight to the point, 'let's get things done' attitude",
+        "emoji_usage": "Expressive emojis with Hebrew expressions 💪",
+        "greeting": "מה קורה בוס! 💪 בואי נעשה עסקים!"
+    }
+}
+
+# Chat Categories
+CHAT_CATEGORIES = {
+    "General Consultation": "💬 כללי",
+    "LinkedIn Research": "🔍 מחקר LinkedIn",
+    "Message Writing": "✍️ כתיבת הודעות",
+    "Data Analysis": "📊 ניתוח נתונים",
+    "Strategy Planning": "🎯 תכנון אסטרטגי",
+    "Network Mapping": "🌐 מיפוי רשתות",
+    "Cost Optimization": "💰 אופטימיזציה",
+    "Technical Support": "🛠️ תמיכה טכנית"
 }
 
 def main():
